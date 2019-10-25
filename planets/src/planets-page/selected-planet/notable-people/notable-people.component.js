@@ -29,46 +29,30 @@ export default function NotablePeople (props) {
     }
   }, [people])
 
-    return (
-      <div className='planetAttribute' {...scope}>
-        <div className='attributeTitle'>Notable People</div>
-        <div className='attribute'>
-          <PeopleList loading={loading} people={notablePeople}/>
-        </div>
-      </div>
-    )
+    return (<div className='planetAttribute' {...scope}>
+              <div className='attributeTitle'>Notable People</div>
+              <div className='attribute'>
+                <PeopleList loading={loading} people={notablePeople}/>
+              </div>
+            </div>)
 }
 
 function PeopleList (props) {
   const { people, loading } = props
   if (loading) {
     return <div>Loading...</div>
-  } else if (people.length > 0) {
-    return (
-      <div>
+  }
+  return (people.length > 0)
+    ? (<div>
         <ul className='residents'>
           {people.map(person => {
-            return (
-              <li key={person.id}
-                className='resident'
-              >
-                <Link
-                  className='brand-link'
-                  to={`/people?selected=${person.id}`}
-                >
-                  {person.name}
-                </Link>
-              </li>
-            )
+            return (<li key={person.id} className='resident'>
+                      <Link className='brand-link' to={`/people?selected=${person.id}`}>
+                        {person.name}
+                      </Link>
+                    </li>)
           })}
         </ul>
-      </div>
-    )
-  } else {
-    return (
-      <div>
-        None found
-      </div>
-    )
-  }
+      </div>)
+  : (<div>None found</div>)
 }
